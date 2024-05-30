@@ -1,0 +1,98 @@
+#login {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url("@images/background/background.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#login-container {
+    width: 400px;
+    height: 300px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    position: relative;
+}
+
+#login-title {
+    margin-bottom: 24px;
+    font-size: 40px;
+    text-align: center;
+    text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
+}
+
+.input-title {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.input-title > img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.input-title > p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#password-container {
+    margin-top: 28px;
+}
+
+#input-container, #login-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+#input-container {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#login-background {
+    opacity: 0.5;
+    z-index: 5;
+    background-color: #ffffff;
+}
+
+#link-container {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+:global(#input-container input) {
+    width: 300px;
+}
+
+:global(#input-container input:placeholder-shown) {
+    transition: background-color .5s;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(#input-container input, #input-container input:hover, #input-container input:focus) {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+:global(.link) {
+    font-weight: bold;
+    color: #000000;
+}
+
+:global(.link:hover) {
+    text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
+}

@@ -1,0 +1,14 @@
+input {
+    height: 32px;
+    padding: 8px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    outline: none;
+    transition: focus .5s;
+    font-size: 14px;
+}
+
+input::placeholder {
+    font-size: 14px;
+    color: #000000;
+}
