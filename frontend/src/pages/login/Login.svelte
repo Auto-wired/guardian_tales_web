@@ -1,12 +1,23 @@
 <script lang="ts">
+import usernameIcon from "@images/icon/username.png";
+import passwordIcon from "@images/icon/password.png";
+
 import { Link } from "svelte-routing";
 
 import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 import Input from "@components/Input.svelte";
 import Button from "@components/Button.svelte";
 
-import usernameIcon from "@images/icon/username.png";
-import passwordIcon from "@images/icon/password.png";
+import AccountEntity from "@entities/AccountEntity.ts";
+
+const accountEntity: AccountEntity = new AccountEntity("", "");
+
+let usernameInput: HTMLInputElement;
+let passwordInput: HTMLInputElement;
+
+function loginProcess (): void {
+
+}
 </script>
 
 <div id="login">
@@ -18,19 +29,19 @@ import passwordIcon from "@images/icon/password.png";
                     <img src={ usernameIcon } alt="username_icon">
                     <p>Username</p>
                 </div>
-                <Input type="text" placeholder="Username"></Input>
+                <Input bind:value={ accountEntity.username } bind:ref={ usernameInput } type="text" placeholder="Username"></Input>
             </div>
             <div id="password-container">
                 <div class="input-title">
                     <img src={ passwordIcon } alt="password_icon">
                     <p>Password</p>
                 </div>
-                <Input type="password" placeholder="Password"></Input>
+                <Input bind:value={ accountEntity.password } bind:ref={ passwordInput } type="password" placeholder="Password"></Input>
             </div>
-            <Button>Login</Button>
+            <Button event={ loginProcess }>Login</Button>
             <div id="link-container">
-                <Link to="/forgot-password" class="link">Forgot password?</Link>
-                <Link to="/register" class="link">Create an account</Link> 
+                <Link to="/forgot-account" class="link">Forgot account?</Link>
+                <Link to="/register" class="link">Create an account</Link>
             </div>
         </TranslucenceContainer>
     </div>

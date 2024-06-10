@@ -1,40 +1,31 @@
 <script lang="ts">
 import { Link } from "svelte-routing";
 
-import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
-import Input from "@components/Input.svelte";
-import Button from "@components/Button.svelte";
+import Account from "./Account.svelte";
+import AccountInfo from "./AccountInfo.svelte";
 
-import usernameIcon from "@images/icon/username.png";
-import passwordIcon from "@images/icon/password.png";
+import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
+
+import AccountEntity from "@entities/AccountEntity.ts";
+
+const accountEntity: AccountEntity = new AccountEntity("", "");
+
+let registerStep: number = 0;
+
+function updateStep (step: number): void {
+    registerStep = step;
+}
 </script>
 
 <div id="register">
     <h1 class="title">REGISTER</h1>
     <div id="register-container">
         <TranslucenceContainer>
-            <div id="id-container">
-                <div class="input-title">
-                    <img src={ usernameIcon } alt="username_icon">
-                    <p>Username</p>
-                </div>
-                <Input type="text" placeholder="Username"></Input>
-            </div>
-            <div id="password-container">
-                <div class="input-title">
-                    <img src={ passwordIcon } alt="password_icon">
-                    <p>Password</p>
-                </div>
-                <Input type="password" placeholder="Password"></Input>
-            </div>
-            <div id="confirm-password-container">
-                <div class="input-title">
-                    <img src={ passwordIcon } alt="password_icon">
-                    <p>Confirm Password</p>
-                </div>
-                <Input type="password" placeholder="Password"></Input>
-            </div>
-            <Button>Register</Button>
+            {#if registerStep === 0}
+                <Account accountEntity={ accountEntity } updateStep={ updateStep }></Account>
+            {:else if registerStep === 1}
+                <AccountInfo></AccountInfo>
+            {/if}
             <div id="link-container">
                 <Link to="/login" class="link">Already have an account?</Link>
             </div>
@@ -62,10 +53,6 @@ import passwordIcon from "@images/icon/password.png";
     text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
 }
 
-#password-container, #confirm-password-container {
-    margin-top: 24px;
-}
-
 :global(#register .input) {
     width: 300px;
 }
@@ -77,22 +64,6 @@ import passwordIcon from "@images/icon/password.png";
 
 :global(#register .input, #register .input:hover, #register .input:focus) {
     background-color: rgba(255, 255, 255, 0.7);
-}
-
-.input-title {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.input-title > img {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px;
-}
-
-.input-title > p, :global(#register .button) {
-    font-weight: bold;
 }
 
 :global(#register .button) {

@@ -1,11 +1,17 @@
 <script lang="ts">
-let placeholder;
-let type;
+let value: string;
+let ref: HTMLInputElement;
+let placeholder: string;
+let type: string;
 
-export { id, type, placeholder };
+export { value, ref, type, placeholder };
+
+function onInput (event: any): void {
+    value = event.target.value;
+}
 </script>
 
-<input class="input" type={ type } placeholder={ placeholder }>
+<input class="input" value={ value } bind:this={ ref } type={ type } placeholder={ placeholder } on:input={ onInput }>
 
 <style>
 input {

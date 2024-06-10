@@ -1,6 +1,10 @@
-<script lang="ts"></script>
+<script lang="ts">
+let event: Function;
 
-<button class="button">
+export { event };
+</script>
+
+<button class="button" on:click={ () => event() }>
     <slot></slot>
 </button>
 
