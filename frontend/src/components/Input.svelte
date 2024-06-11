@@ -6,8 +6,14 @@ let type: string;
 
 export { value, ref, type, placeholder };
 
+import { createEventDispatcher } from "svelte";
+
+const dispath = createEventDispatcher();
+
 function onInput (event: any): void {
     value = event.target.value;
+
+    dispath("onInput");
 }
 </script>
 

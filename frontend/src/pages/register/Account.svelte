@@ -15,17 +15,17 @@ import type AccountEntity from "@entities/AccountEntity.ts";
 let usernameInput: HTMLInputElement;
 let passwordInput: HTMLInputElement;
 let confirmPasswordInput: HTMLInputElement;
-let confirmPassword: string = "";
+let validateUsernameResult: string = "";
+let validatePasswordResult: string = "";
+let validateConfirmPasswordResult: string = "";
 
 function validateAccount (): boolean {
-    const validateUsernameResult: string = accountEntity.validateUsername();
-    const validatePasswordResult: string = accountEntity.validatePassword();
-    const validateConfirmPasswordResult: string = validateConfirmPassword();
+    validateUsernameResult = accountEntity.validateUsername();
+    validatePasswordResult = accountEntity.validatePassword();
+    validateConfirmPasswordResult = accountEntity.validateConfirmPassword();
 
     function validateAccountProcess (validateResult: string, input: HTMLInputElement): boolean {
         if (validateResult.length > 0) {
-            alert(validateResult);
-
             input.focus();
 
             return false;
@@ -37,15 +37,7 @@ function validateAccount (): boolean {
     return validateAccountProcess(validateUsernameResult, usernameInput) && validateAccountProcess(validatePasswordResult, passwordInput) && validateAccountProcess(validateConfirmPasswordResult, confirmPasswordInput);
 }
 
-function validateConfirmPassword (): string {
-    if (confirmPassword !== accountEntity.password) {
-        return "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
-    }
-
-    return "";
-}
-
-function nextProcess ():void {
+function nextProcess (): void {
     if (!validateAccount()) {
         return;
     }
@@ -60,29 +52,32 @@ function nextProcess ():void {
             <img src={ usernameIcon } alt="username_icon">
             <p>Username</p>
         </div>
-        <Input bind:value={ accountEntity.username } bind:ref={ usernameInput } type="text" placeholder="Username"></Input>
+        <Input on:onInput={ () => validateUsernameResult = "" } bind:value={ accountEntity.username } bind:ref={ usernameInput } type="text" placeholder="Username"></Input>
+        <p class="warning-text">{ validateUsernameResult }</p>
     </div>
     <div id="password-container">
         <div class="input-title">
             <img src={ passwordIcon } alt="password_icon">
             <p>Password</p>
         </div>
-        <Input bind:value={ accountEntity.password } bind:ref={ passwordInput } type="password" placeholder="Password"></Input>
+        <Input on:onInput={ () => validatePasswordResult = "" } bind:value={ accountEntity.password } bind:ref={ passwordInput } type="password" placeholder="Password"></Input>
+        <p class="warning-text">{ validatePasswordResult }</p>
     </div>
     <div id="confirm-password-container">
         <div class="input-title">
             <img src={ passwordIcon } alt="password_icon">
             <p>Confirm Password</p>
         </div>
-        <Input bind:value={ confirmPassword } bind:ref={ confirmPasswordInput } type="password" placeholder="Password"></Input>
+        <Input on:onInput={ () => validateConfirmPasswordResult = "" } bind:value={ accountEntity.confirmPassword } bind:ref={ confirmPasswordInput } type="password" placeholder="Password"></Input>
+        <p class="warning-text">{ validateConfirmPasswordResult }</p>
     </div>
     <Button event={ nextProcess }>Next</Button>
 </div>
 
 <style>
-#password-container, #confirm-password-container {
+/* #password-container, #confirm-password-container {
     margin-top: 24px;
-}
+} */
 
 .input-title {
     margin-bottom: 8px;
@@ -96,7 +91,18 @@ function nextProcess ():void {
     margin-right: 8px;
 }
 
-.input-title > p, :global(#register .button) {
+.input-title > p {
     font-weight: bold;
+}
+
+.warning-text {
+    height: 24px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #ff0000;
+}
+
+:global(#account .button) {
+    width: 300px;
 }
 </style>

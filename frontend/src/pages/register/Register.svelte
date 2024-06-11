@@ -8,7 +8,7 @@ import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 
 import AccountEntity from "@entities/AccountEntity.ts";
 
-const accountEntity: AccountEntity = new AccountEntity("", "");
+const accountEntity: AccountEntity = new AccountEntity();
 
 let registerStep: number = 0;
 
@@ -21,11 +21,11 @@ function updateStep (step: number): void {
     <h1 class="title">REGISTER</h1>
     <div id="register-container">
         <TranslucenceContainer>
-            {#if registerStep === 0}
+            { #if registerStep === 0 }
                 <Account accountEntity={ accountEntity } updateStep={ updateStep }></Account>
-            {:else if registerStep === 1}
-                <AccountInfo></AccountInfo>
-            {/if}
+            { :else if registerStep === 1 }
+                <AccountInfo accountEntity={ accountEntity } updateStep={ updateStep }></AccountInfo>
+            { /if }
             <div id="link-container">
                 <Link to="/login" class="link">Already have an account?</Link>
             </div>
@@ -53,6 +53,14 @@ function updateStep (step: number): void {
     text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
 }
 
+#link-container {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 :global(#register .input) {
     width: 300px;
 }
@@ -67,8 +75,8 @@ function updateStep (step: number): void {
 }
 
 :global(#register .button) {
-    width: 300px;
     margin-top: 24px;
+    font-weight: bold;
     transition: background-color .5s, color .5s;
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -76,14 +84,6 @@ function updateStep (step: number): void {
 :global(#register .button:hover) {
     color: #ffffff;
     background-color: #000000;
-}
-
-#link-container {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
 }
 
 :global(#register .link) {

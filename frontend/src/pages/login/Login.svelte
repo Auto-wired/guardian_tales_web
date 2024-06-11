@@ -10,7 +10,7 @@ import Button from "@components/Button.svelte";
 
 import AccountEntity from "@entities/AccountEntity.ts";
 
-const accountEntity: AccountEntity = new AccountEntity("", "");
+const accountEntity: AccountEntity = new AccountEntity();
 
 let usernameInput: HTMLInputElement;
 let passwordInput: HTMLInputElement;
