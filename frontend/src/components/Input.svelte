@@ -1,9 +1,9 @@
 <script lang="ts">
-let value: string;
-let ref: HTMLInputElement;
-let type: string;
-let placeholder: string;
-let icon: string;
+let value: string = "";
+let ref: HTMLInputElement | null = null;
+let type: string = "text";
+let placeholder: string = "";
+let icon: string = "";
 
 export { value, ref, type, placeholder, icon };
 
@@ -19,8 +19,10 @@ function onInput (event: any): void {
 </script>
 
 <div class="input">
-    <input value={ value } bind:this={ ref } type={ type } placeholder={ placeholder } on:input={ onInput } autocomplete="off">
-    <img src={ icon } alt="input_icon">
+    <input class={ icon.length > 0 ? "enable-icon" : "disable-icon" } value={ value } bind:this={ ref } type={ type } placeholder={ placeholder } on:input={ onInput } autocomplete="off">
+    { #if icon.length > 0 }
+        <img src={ icon } alt="input_icon">
+    { /if }
 </div>
 
 <style>
@@ -30,7 +32,6 @@ function onInput (event: any): void {
 
 input {
     height: 32px;
-    padding-left: 44px;
     padding-right: 8px;
     border: 1px solid #000000;
     border-radius: 4px;
@@ -42,6 +43,14 @@ input {
 input::placeholder {
     font-size: 12px;
     color: #000000;
+}
+
+.enable-icon {
+    padding-left: 44px;
+}
+
+.disable-icon {
+    padding-left: 8px;
 }
 
 img {

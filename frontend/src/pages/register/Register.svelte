@@ -7,6 +7,8 @@ import emailIcon from "@images/icon/email.png";
 
 import { Link } from "svelte-routing";
 
+import Verify from "@layouts/Verify.svelte";
+
 import Input from "@components/Input.svelte";
 import Button from "@components/Button.svelte";
 import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
@@ -23,6 +25,7 @@ let emailInput: HTMLInputElement;
 let validateUsernameResult: string = "";
 let validatePasswordResult: string = "";
 let validateConfirmPasswordResult: string = "";
+let isValidatedAccountEntity: boolean = true;
 
 function validateAccount (): boolean {
     validateUsernameResult = accountEntity.validateUsername();
@@ -45,67 +48,68 @@ function validateAccount (): boolean {
 
 <div id="register">
     <h1 class="title">REGISTER</h1>
-    <div id="register-container">
-        <TranslucenceContainer>
-            <div id="id-container">
-                <Input 
-                    on:onInput={ () => validateUsernameResult = "" }
-                    bind:value={ accountEntity.username }
-                    bind:ref={ usernameInput }
-                    type="text"
-                    placeholder="Username"
-                    icon={ usernameIcon }
-                />
-                <p class="warning-text">{ validateUsernameResult }</p>
-            </div>
-            <div id="password-container">
-                <Input
-                    on:onInput={ () => validatePasswordResult = "" }
-                    bind:value={ accountEntity.password }
-                    bind:ref={ passwordInput }
-                    type="password"
-                    placeholder="Password"
-                    icon={ passwordIcon }
-                />
-                <p class="warning-text">{ validatePasswordResult }</p>
-            </div>
-            <div id="confirm-password-container">
-                <Input
-                    on:onInput={ () => validateConfirmPasswordResult = "" }
-                    bind:value={ accountEntity.confirmPassword }
-                    bind:ref={ confirmPasswordInput }
-                    type="password"
-                    placeholder="Confirm password"
-                    icon={ confirmPasswordIcon }
-                />
-                <p class="warning-text">{ validateConfirmPasswordResult }</p>
-            </div>
-            <div id="nickname-container">
-                <Input
-                    bind:value={ accountEntity.nickname }
-                    bind:ref={ nicknameInput }
-                    type="text"
-                    placeholder="Nickname"
-                    icon={ nicknameIcon }
-                />
-                <p class="warning-text"></p>
-            </div>
-            <div id="email-container">
-                <Input
-                    bind:value={ accountEntity.email }
-                    bind:ref={ emailInput }
-                    type="text"
-                    placeholder="Email"
-                    icon={ emailIcon }
-                />
-                <p class="warning-text"></p>
-            </div>
-            <Button event={ () => {} }>Next</Button>
-            <div id="link-container">
-                <Link to="/login" class="link">Already have an account?</Link>
-            </div>
-        </TranslucenceContainer>
-    </div>
+    { #if !isValidatedAccountEntity }
+        <div id="register-container">
+            <TranslucenceContainer>
+                <div id="id-container">
+                    <Input 
+                        on:onInput={ () => validateUsernameResult = "" }
+                        bind:value={ accountEntity.username }
+                        bind:ref={ usernameInput }
+                        placeholder="Username"
+                        icon={ usernameIcon }
+                    />
+                    <p class="warning-text">{ validateUsernameResult }</p>
+                </div>
+                <div id="password-container">
+                    <Input
+                        on:onInput={ () => validatePasswordResult = "" }
+                        bind:value={ accountEntity.password }
+                        bind:ref={ passwordInput }
+                        type="password"
+                        placeholder="Password"
+                        icon={ passwordIcon }
+                    />
+                    <p class="warning-text">{ validatePasswordResult }</p>
+                </div>
+                <div id="confirm-password-container">
+                    <Input
+                        on:onInput={ () => validateConfirmPasswordResult = "" }
+                        bind:value={ accountEntity.confirmPassword }
+                        bind:ref={ confirmPasswordInput }
+                        type="password"
+                        placeholder="Confirm password"
+                        icon={ confirmPasswordIcon }
+                    />
+                    <p class="warning-text">{ validateConfirmPasswordResult }</p>
+                </div>
+                <div id="nickname-container">
+                    <Input
+                        bind:value={ accountEntity.nickname }
+                        bind:ref={ nicknameInput }
+                        placeholder="Nickname"
+                        icon={ nicknameIcon }
+                    />
+                    <p class="warning-text"></p>
+                </div>
+                <div id="email-container">
+                    <Input
+                        bind:value={ accountEntity.email }
+                        bind:ref={ emailInput }
+                        placeholder="Email"
+                        icon={ emailIcon }
+                    />
+                    <p class="warning-text"></p>
+                </div>
+                <Button event={ () => {} }>Next</Button>
+                <div id="link-container">
+                    <Link to="/login" class="link">Already have an account?</Link>
+                </div>
+            </TranslucenceContainer>
+        </div>
+    { :else }
+        <Verify></Verify>
+    { /if }
 </div>
 
 <style>
@@ -144,7 +148,7 @@ function validateAccount (): boolean {
     gap: 8px;
 }
 
-:global(#register input) {
+:global(#register-container input, #register-container button) {
     width: 300px;
 }
 
@@ -158,7 +162,6 @@ function validateAccount (): boolean {
 }
 
 :global(#register button) {
-    width: 300px;
     font-weight: bold;
     color: #ffffff;
     background-color: #000000;

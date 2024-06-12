@@ -22,6 +22,7 @@
       "@images/*": ["src/assets/images/*"],
       "@components/*": ["src/components/*"],
       "@entities/*": ["src/entities/*"],
+      "@layouts/*": ["src/layouts/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],

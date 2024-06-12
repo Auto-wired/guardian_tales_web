@@ -11,6 +11,7 @@ export default defineConfig({
             "@images": "/src/assets/images/",
             "@components": "/src/components/",
             "@entities": "/src/entities/",
+            "@layouts": "/src/layouts/",
         },
     },
 });
