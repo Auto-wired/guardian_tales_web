@@ -1,7 +1,6 @@
 node version 20.12.1
 
-<a href="https://www.flaticon.com/kr/free-icons/" title="사용자 아이콘">사용자 아이콘 제작자: Debi Alpa Nugraha - Flaticon</a> <br/>
-<a href="https://www.flaticon.com/kr/free-icons/" title="터놓다 아이콘">터놓다 아이콘 제작자: Uniconlabs - Flaticon</a> <br/>
-<a href="https://www.flaticon.com/kr/free-icons/" title="꼬리표 아이콘">꼬리표 아이콘 제작자: Dave Gandy - Flaticon</a> <br/>
-<a href="https://www.flaticon.com/kr/free-icons/" title="이메일 아이콘">이메일 아이콘 제작자: Uniconlabs - Flaticon</a> <br/>
-<a href="https://www.flaticon.com/kr/free-icons/" title="이메일 아이콘">이메일 아이콘 제작자: Smashicons - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/free-icons/username" title="username icons">Username icons created by riajulislam - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/free-icons/passkey" title="passkey icons">Passkey icons created by Roundicons Premium - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/free-icons/tag" title="tag icons">Tag icons created by edt.im - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/free-icons/email" title="email icons">Email icons created by Freepik - Flaticon</a> <br/>

@@ -25,18 +25,24 @@ function loginProcess (): void {
     <div id="login-container">
         <TranslucenceContainer>
             <div id="id-container">
-                <div class="input-title">
-                    <img src={ usernameIcon } alt="username_icon">
-                    <p>Username</p>
-                </div>
-                <Input bind:value={ accountEntity.username } bind:ref={ usernameInput } type="text" placeholder="Username"></Input>
+                <Input
+                    bind:value={ accountEntity.username }
+                    bind:ref={ usernameInput }
+                    type="text"
+                    placeholder="Username"
+                    icon={ usernameIcon }
+                />
+                <p class="warning-text"></p>
             </div>
             <div id="password-container">
-                <div class="input-title">
-                    <img src={ passwordIcon } alt="password_icon">
-                    <p>Password</p>
-                </div>
-                <Input bind:value={ accountEntity.password } bind:ref={ passwordInput } type="password" placeholder="Password"></Input>
+                <Input
+                    bind:value={ accountEntity.password }
+                    bind:ref={ passwordInput }
+                    type="password"
+                    placeholder="Password"
+                    icon={ passwordIcon }
+                />
+                <p class="warning-text"></p>
             </div>
             <Button event={ loginProcess }>Login</Button>
             <div id="link-container">
@@ -67,49 +73,12 @@ function loginProcess (): void {
     text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
 }
 
-#password-container {
-    margin-top: 24px;
-}
-
-:global(#login .input) {
-    width: 300px;
-}
-
-:global(#login .input:placeholder-shown) {
-    transition: background-color .5s;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(#login .input, #login .input:hover, #login .input:focus) {
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-.input-title {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-}
-
-.input-title > img {
-    width: 24px;
+.warning-text {
     height: 24px;
-    margin-right: 8px;
-}
-
-.input-title > p, :global(#login .button) {
+    margin-top: 4px;
+    font-size: 11px;
     font-weight: bold;
-}
-
-:global(#login .button) {
-    width: 300px;
-    margin-top: 24px;
-    transition: background-color .5s, color .5s;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-:global(#login .button:hover) {
-    color: #ffffff;
-    background-color: #000000;
+    color: #ff0000;
 }
 
 #link-container {
@@ -118,6 +87,31 @@ function loginProcess (): void {
     flex-direction: column;
     align-items: center;
     gap: 8px;
+}
+
+:global(#login input) {
+    width: 300px;
+}
+
+:global(#login input:placeholder-shown) {
+    transition: background-color .5s;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+:global(#login input, #login input:hover, #login input:focus) {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+:global(#login button) {
+    width: 300px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #000000;
+    transition: box-shadow .5s;
+}
+
+:global(#login button:hover) {
+    box-shadow: 0px 0px 20px 1px #000000;
 }
 
 :global(#login .link) {
