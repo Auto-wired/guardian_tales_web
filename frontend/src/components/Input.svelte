@@ -16,12 +16,18 @@ function onInput (event: any): void {
 
     dispath("onInput");
 }
+
+function onFocus (event: any): void {
+    event.target.select();
+}
 </script>
 
 <div class="input">
-    <input class={ icon.length > 0 ? "enable-icon" : "disable-icon" } value={ value } bind:this={ ref } type={ type } placeholder={ placeholder } on:input={ onInput } autocomplete="off">
+    <input class={ icon.length > 0 ? "enable-icon" : "disable-icon" } value={ value } bind:this={ ref } type={ type } placeholder={ placeholder } on:input={ onInput } on:focus={ onFocus } autocomplete="off">
     { #if icon.length > 0 }
-        <img src={ icon } alt="input_icon">
+        <div class="icon-container">
+            <img src={ icon } alt="input_icon">
+        </div>
     { /if }
 </div>
 
@@ -38,6 +44,7 @@ input {
     outline: none;
     transition: focus .5s;
     font-size: 14px;
+    box-shadow: 0 0 5px 1px #000000;
 }
 
 input::placeholder {
@@ -53,13 +60,31 @@ input::placeholder {
     padding-left: 8px;
 }
 
-img {
-    height: 20px;
-    padding-right: 8px;
-    border-right: 1px solid #000000;
+.icon-container {
+    width: 36px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.icon-container::after {
+    width: 1px;
+    height: 22px;
+    border-right: 2px solid #000000;
+    border-radius: 100px;
+    content: "";
     position: absolute;
     top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
+    right: -4px;
+    transform: translate(-50%, -50%);
+}
+
+img {
+    height: 20px;
 }
 </style>

@@ -25,24 +25,74 @@ let emailInput: HTMLInputElement;
 let validateUsernameResult: string = "";
 let validatePasswordResult: string = "";
 let validateConfirmPasswordResult: string = "";
-let isValidatedAccountEntity: boolean = true;
+let validateNicknameResult: string = "";
+let validateEmailResult: string = "";
+let isValidatedAccountEntity: boolean = false;
+
+function register (): void {
+    if (!validateAccount()) {
+        return;
+    }
+
+    // register code
+
+    isValidatedAccountEntity = true;
+}
 
 function validateAccount (): boolean {
+    class ValidateEntity {
+        
+        validateResult: string;
+        input: HTMLInputElement;
+
+        constructor (validateResult: string, input: HTMLInputElement) {
+            this.validateResult = validateResult;
+            this.input = input;
+        }
+
+    };
+
+    let validateResult: boolean = true;
+
     validateUsernameResult = accountEntity.validateUsername();
     validatePasswordResult = accountEntity.validatePassword();
     validateConfirmPasswordResult = accountEntity.validateConfirmPassword();
+    validateNicknameResult = accountEntity.validateNickname();
+    validateEmailResult = accountEntity.validateEmail();
 
-    function validateAccountProcess (validateResult: string, input: HTMLInputElement): boolean {
-        if (validateResult.length > 0) {
-            input.focus();
+    const validateResultList: Array<ValidateEntity> = [
+        new ValidateEntity(validateUsernameResult, usernameInput),
+        new ValidateEntity(validatePasswordResult, passwordInput),
+        new ValidateEntity(validateConfirmPasswordResult, confirmPasswordInput),
+        new ValidateEntity(validateNicknameResult, nicknameInput),
+        new ValidateEntity(validateEmailResult, emailInput),
+    ];
 
-            return false;
+    for (const validateEntity of validateResultList.reverse()) {
+        if (validateEntity.validateResult.length > 0) {
+            validateEntity.input.focus();
+
+            validateResult = false;
         }
 
-        return true;
+        setInputStyle(validateEntity.input, validateEntity.validateResult.length === 0);
     }
 
-    return validateAccountProcess(validateUsernameResult, usernameInput) && validateAccountProcess(validatePasswordResult, passwordInput) && validateAccountProcess(validateConfirmPasswordResult, confirmPasswordInput);
+    return validateResult;
+}
+
+function setInputStyle (input: HTMLInputElement, isValidated: boolean): void {
+    const color: string = isValidated ? "#5bff5b" : "#ff5b5b";
+
+    console.log(color);
+
+    input.style.border = `1px solid ${ color }`;
+    input.style.boxShadow = `0 0 5px 1px ${ color }`;
+}
+
+function clearInputStyle (input: HTMLInputElement): void {
+    input.style.border = "1px solid #000000";
+    input.style.boxShadow = "0 0 5px 1px #000000";
 }
 </script>
 
@@ -53,7 +103,11 @@ function validateAccount (): boolean {
             <TranslucenceContainer>
                 <div id="id-container">
                     <Input 
-                        on:onInput={ () => validateUsernameResult = "" }
+                        on:onInput={() => {
+                            validateUsernameResult = "";
+
+                            clearInputStyle(usernameInput);
+                        }}
                         bind:value={ accountEntity.username }
                         bind:ref={ usernameInput }
                         placeholder="Username"
@@ -63,7 +117,11 @@ function validateAccount (): boolean {
                 </div>
                 <div id="password-container">
                     <Input
-                        on:onInput={ () => validatePasswordResult = "" }
+                        on:onInput={() => {
+                            validatePasswordResult = "";
+
+                            clearInputStyle(passwordInput);
+                        }}
                         bind:value={ accountEntity.password }
                         bind:ref={ passwordInput }
                         type="password"
@@ -74,7 +132,11 @@ function validateAccount (): boolean {
                 </div>
                 <div id="confirm-password-container">
                     <Input
-                        on:onInput={ () => validateConfirmPasswordResult = "" }
+                        on:onInput={() => {
+                            validateConfirmPasswordResult = "";
+
+                            clearInputStyle(confirmPasswordInput);
+                        }}
                         bind:value={ accountEntity.confirmPassword }
                         bind:ref={ confirmPasswordInput }
                         type="password"
@@ -85,23 +147,33 @@ function validateAccount (): boolean {
                 </div>
                 <div id="nickname-container">
                     <Input
+                        on:onInput={() => {
+                            validateNicknameResult = "";
+
+                            clearInputStyle(nicknameInput);
+                        }}
                         bind:value={ accountEntity.nickname }
                         bind:ref={ nicknameInput }
                         placeholder="Nickname"
                         icon={ nicknameIcon }
                     />
-                    <p class="warning-text"></p>
+                    <p class="warning-text">{ validateNicknameResult }</p>
                 </div>
                 <div id="email-container">
                     <Input
+                        on:onInput={() => {
+                            validateEmailResult = "";
+
+                            clearInputStyle(emailInput);
+                        }}
                         bind:value={ accountEntity.email }
                         bind:ref={ emailInput }
                         placeholder="Email"
                         icon={ emailIcon }
                     />
-                    <p class="warning-text"></p>
+                    <p class="warning-text">{ validateEmailResult }</p>
                 </div>
-                <Button event={ () => {} }>Next</Button>
+                <Button event={ register }>Register</Button>
                 <div id="link-container">
                     <Link to="/login" class="link">Already have an account?</Link>
                 </div>
@@ -141,7 +213,7 @@ function validateAccount (): boolean {
 }
 
 #link-container {
-    margin-top: 24px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;

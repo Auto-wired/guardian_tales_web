@@ -6,9 +6,48 @@ import Button from "@components/Button.svelte";
 import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 
 const verificationCodeList: Array<string> = new Array<string>(8);
+const verificationCodeInputList: Array<HTMLInputElement> = new Array<HTMLInputElement>(8);
 
-function print (): void {
-    console.log(verificationCodeList);
+function onNext (verificationCodeIndex: number): void {
+    if (verificationCodeIndex === 7) {
+        return;
+    }
+
+    let verificationCode: string = verificationCodeList[verificationCodeIndex].substring(0, 1);
+
+    if (/[^a-zA-Z0-9]/.test(verificationCode)) {
+        verificationCode = "";
+    } else if (/[a-z]/.test(verificationCode)) {
+        verificationCode = verificationCode.toUpperCase();
+    }
+
+    verificationCodeList[verificationCodeIndex] = verificationCode;
+
+    if (verificationCode.length === 1) {
+        verificationCodeInputList[verificationCodeIndex + 1].focus();
+    }
+}
+
+function validateVerificationCode (): boolean {
+    for (let i: number = 0; i < verificationCodeList.length; i++) {
+        if (verificationCodeList[i].length === 0) {
+            verificationCodeInputList[i].focus();
+
+            alert("코드를 입력해주세요.");
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function verify (): void {
+    if (!validateVerificationCode()) {
+        return;
+    }
+
+    const verificationCode: string = verificationCodeList.join("");
 }
 </script>
 
@@ -21,12 +60,13 @@ function print (): void {
         <div id="verify-container">
             { #each verificationCodeList as verificationCode, verificationCodeIndex }
                 <Input
-                    on:onInput={ print }
+                    on:onInput={ () => onNext(verificationCodeIndex) }
                     bind:value={ verificationCode }
+                    bind:ref={ verificationCodeInputList[verificationCodeIndex] }
                 />
             {/each }
         </div>
-        <Button event={ () => {} }>Verify</Button>
+        <Button event={ verify }>Verify</Button>
     </TranslucenceContainer>
 </div>
 
@@ -45,7 +85,7 @@ function print (): void {
 }
 
 img {
-    height: 48px;
+    height: 60px;
 }
 
 :global(#verify input) {

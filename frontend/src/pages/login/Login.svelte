@@ -82,7 +82,7 @@ function loginProcess (): void {
 }
 
 #link-container {
-    margin-top: 24px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
