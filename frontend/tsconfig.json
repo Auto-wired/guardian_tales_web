@@ -21,7 +21,8 @@
       "@/*": ["src/*"],
       "@images/*": ["src/assets/images/*"],
       "@components/*": ["src/components/*"],
-      "@entities/*": ["src/entities/*"],
+      "@entities/*": ["src/classes/entities/*"],
+      "@properties/*": ["src/classes/properties/*"],
       "@layouts/*": ["src/layouts/*"]
     }
   },

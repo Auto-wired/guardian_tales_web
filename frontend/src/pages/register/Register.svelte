@@ -9,11 +9,13 @@ import { Link } from "svelte-routing";
 
 import Verify from "@layouts/Verify.svelte";
 
+import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 import Input from "@components/Input.svelte";
 import Button from "@components/Button.svelte";
-import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 
 import AccountEntity from "@entities/AccountEntity.ts";
+
+import ValidateProperty from "@properties/ValidateProperty.ts";
 
 const accountEntity: AccountEntity = new AccountEntity();
 
@@ -30,7 +32,7 @@ let validateEmailResult: string = "";
 let isValidatedAccountEntity: boolean = false;
 
 function register (): void {
-    if (!validateAccount()) {
+    if (!validateAccountEntity()) {
         return;
     }
 
@@ -39,19 +41,7 @@ function register (): void {
     isValidatedAccountEntity = true;
 }
 
-function validateAccount (): boolean {
-    class ValidateEntity {
-        
-        validateResult: string;
-        input: HTMLInputElement;
-
-        constructor (validateResult: string, input: HTMLInputElement) {
-            this.validateResult = validateResult;
-            this.input = input;
-        }
-
-    };
-
+function validateAccountEntity (): boolean {
     let validateResult: boolean = true;
 
     validateUsernameResult = accountEntity.validateUsername();
@@ -60,22 +50,22 @@ function validateAccount (): boolean {
     validateNicknameResult = accountEntity.validateNickname();
     validateEmailResult = accountEntity.validateEmail();
 
-    const validateResultList: Array<ValidateEntity> = [
-        new ValidateEntity(validateUsernameResult, usernameInput),
-        new ValidateEntity(validatePasswordResult, passwordInput),
-        new ValidateEntity(validateConfirmPasswordResult, confirmPasswordInput),
-        new ValidateEntity(validateNicknameResult, nicknameInput),
-        new ValidateEntity(validateEmailResult, emailInput),
+    const validateResultList: Array<ValidateProperty> = [
+        new ValidateProperty(validateUsernameResult, usernameInput),
+        new ValidateProperty(validatePasswordResult, passwordInput),
+        new ValidateProperty(validateConfirmPasswordResult, confirmPasswordInput),
+        new ValidateProperty(validateNicknameResult, nicknameInput),
+        new ValidateProperty(validateEmailResult, emailInput),
     ];
 
-    for (const validateEntity of validateResultList.reverse()) {
-        if (validateEntity.validateResult.length > 0) {
-            validateEntity.input.focus();
+    for (const validateProperty of validateResultList.reverse()) {
+        if (validateProperty.validateResult.length > 0) {
+            validateProperty.input.focus();
 
             validateResult = false;
         }
 
-        setInputStyle(validateEntity.input, validateEntity.validateResult.length === 0);
+        setInputStyle(validateProperty.input, validateProperty.validateResult.length === 0);
     }
 
     return validateResult;
@@ -83,8 +73,6 @@ function validateAccount (): boolean {
 
 function setInputStyle (input: HTMLInputElement, isValidated: boolean): void {
     const color: string = isValidated ? "#5bff5b" : "#ff5b5b";
-
-    console.log(color);
 
     input.style.border = `1px solid ${ color }`;
     input.style.boxShadow = `0 0 5px 1px ${ color }`;
@@ -220,6 +208,10 @@ function clearInputStyle (input: HTMLInputElement): void {
     gap: 8px;
 }
 
+:global(#register input) {
+    box-shadow: 0 0 5px 1px #000000;
+}
+
 :global(#register-container input, #register-container button) {
     width: 300px;
 }
@@ -247,11 +239,11 @@ function clearInputStyle (input: HTMLInputElement): void {
 :global(#register .link) {
     font-size: 14px;
     font-weight: bold;
-    transition: text-shadow .5s;
+    transition: filter .5s;
     color: #000000;
 }
 
 :global(#register .link:hover) {
-    text-shadow: -1px 0px #ffffff, 0px 1px #ffffff, 1px 0px #ffffff, 0px -1px #ffffff;
+    filter: drop-shadow(0px 0px 2px #000000);
 }
 </style>

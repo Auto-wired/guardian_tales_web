@@ -44,7 +44,6 @@ input {
     outline: none;
     transition: focus .5s;
     font-size: 14px;
-    box-shadow: 0 0 5px 1px #000000;
 }
 
 input::placeholder {
