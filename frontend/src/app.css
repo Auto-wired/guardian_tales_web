@@ -14,3 +14,9 @@ html, body, #app {
     overflow: hidden;
     user-select: none;
 }
+
+@keyframes rotate_image {
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -6,3 +6,4 @@ node version 20.12.1
 <a href="https://www.flaticon.com/free-icons/tag" title="tag icons">Tag icons created by edt.im - Flaticon</a> <br/>
 <a href="https://www.flaticon.com/free-icons/email" title="email icons">Email icons created by Freepik - Flaticon</a> <br/>
 <a href="https://www.flaticon.com/free-icons/approved-message" title="approved message icons">Approved message icons created by Md Tanvirul Haque - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/free-icons/anonymous" title="anonymous icons">Anonymous icons created by Slidicon - Flaticon</a> <br/>

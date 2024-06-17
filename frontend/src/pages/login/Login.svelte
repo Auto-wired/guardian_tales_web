@@ -78,7 +78,7 @@ function clearInputStyle (input: HTMLInputElement): void {
     { #if !isValidatedAccountEntity }
         <div id="login-container">
             <TranslucenceContainer>
-                <div id="id-container">
+                <div id="username-container">
                     <Input
                         on:onInput={() => {
                             validateUsernameResult = "";
@@ -110,8 +110,9 @@ function clearInputStyle (input: HTMLInputElement): void {
                 </div>
                 <Button event={ loginProcess }>Login</Button>
                 <div id="link-container">
-                    <Link to="/forgot-account" class="link">Forgot account?</Link>
-                    <Link to="/register" class="link">Create an account</Link>
+                    <Link class="link" to="/forgot-username">Forgot username?</Link>
+                    <Link class="link" to="/forgot-password">Forgot password?</Link>
+                    <Link class="link" to="/register">Create an account</Link>
                 </div>
             </TranslucenceContainer>
         </div>
@@ -157,7 +158,7 @@ function clearInputStyle (input: HTMLInputElement): void {
 }
 
 :global(#login input) {
-    box-shadow: 0 0 5px 1px #000000;
+    box-shadow: 0px 0px 5px 1px #000000;
 }
 
 :global(#login-container input, #login-container button) {
@@ -165,7 +166,7 @@ function clearInputStyle (input: HTMLInputElement): void {
 }
 
 :global(#login input:placeholder-shown) {
-    transition: background-color .5s;
+    transition: background-color 0.5s;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -175,9 +176,9 @@ function clearInputStyle (input: HTMLInputElement): void {
 
 :global(#login button) {
     font-weight: bold;
+    transition: box-shadow 0.5s;
     color: #ffffff;
     background-color: #000000;
-    transition: box-shadow .5s;
 }
 
 :global(#login button:hover) {

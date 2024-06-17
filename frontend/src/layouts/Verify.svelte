@@ -1,10 +1,13 @@
 <script lang="ts">
 import verificationCodeIcon from "@images/icon/verification_code.png";
 
+import { createEventDispatcher, type EventDispatcher } from "svelte";
+
 import Input from "@components/Input.svelte";
 import Button from "@components/Button.svelte";
 import TranslucenceContainer from "@components/TranslucenceContainer.svelte";
 
+const dispath: EventDispatcher<any> = createEventDispatcher();
 const verificationCodeList: Array<string> = new Array<string>(8);
 const verificationCodeInputList: Array<HTMLInputElement> = new Array<HTMLInputElement>(8);
 
@@ -43,11 +46,15 @@ function validateVerificationCode (): boolean {
 }
 
 function verify (): void {
-    if (!validateVerificationCode()) {
-        return;
-    }
+    // if (!validateVerificationCode()) {
+    //     return;
+    // }
 
-    const verificationCode: string = verificationCodeList.join("");
+    // const verificationCode: string = verificationCodeList.join("");
+
+    // verify
+
+    dispath("success");
 }
 </script>
 

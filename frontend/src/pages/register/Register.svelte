@@ -31,12 +31,22 @@ let validateNicknameResult: string = "";
 let validateEmailResult: string = "";
 let isValidatedAccountEntity: boolean = false;
 
-function register (): void {
+async function register (): Promise<void> {
+    // register code
+}
+
+async function validateDuplicateUsername (): Promise<boolean> {
+    return true;
+}
+
+function onNext (): void {
     if (!validateAccountEntity()) {
         return;
     }
 
-    // register code
+    if (!validateDuplicateUsername()) {
+        return;
+    }
 
     isValidatedAccountEntity = true;
 }
@@ -89,7 +99,7 @@ function clearInputStyle (input: HTMLInputElement): void {
     { #if !isValidatedAccountEntity }
         <div id="register-container">
             <TranslucenceContainer>
-                <div id="id-container">
+                <div id="username-container">
                     <Input 
                         on:onInput={() => {
                             validateUsernameResult = "";
@@ -161,14 +171,14 @@ function clearInputStyle (input: HTMLInputElement): void {
                     />
                     <p class="warning-text">{ validateEmailResult }</p>
                 </div>
-                <Button event={ register }>Register</Button>
+                <Button event={ onNext }>Register</Button>
                 <div id="link-container">
-                    <Link to="/login" class="link">Already have an account?</Link>
+                    <Link class="link" to="/login">Already have an account?</Link>
                 </div>
             </TranslucenceContainer>
         </div>
     { :else }
-        <Verify></Verify>
+        <Verify on:success={ register }></Verify>
     { /if }
 </div>
 
@@ -209,7 +219,7 @@ function clearInputStyle (input: HTMLInputElement): void {
 }
 
 :global(#register input) {
-    box-shadow: 0 0 5px 1px #000000;
+    box-shadow: 0px 0px 5px 1px #000000;
 }
 
 :global(#register-container input, #register-container button) {
@@ -217,7 +227,7 @@ function clearInputStyle (input: HTMLInputElement): void {
 }
 
 :global(#register input:placeholder-shown) {
-    transition: background-color .5s;
+    transition: background-color 0.5s;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -227,9 +237,9 @@ function clearInputStyle (input: HTMLInputElement): void {
 
 :global(#register button) {
     font-weight: bold;
+    transition: box-shadow 0.5s;
     color: #ffffff;
     background-color: #000000;
-    transition: box-shadow .5s;
 }
 
 :global(#register button:hover) {
