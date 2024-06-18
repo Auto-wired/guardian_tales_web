@@ -3,23 +3,69 @@ import logo from "@images/logo.png";
 
 import { onMount } from "svelte";
 
+import Lupina from "@properties/LupinaProperty.ts";
+
+const lupinaList: Array<Lupina> = [];
+const imageSize: number = 66;
+
 let notFound: HTMLDivElement;
 
 onMount(() => {
-    for (let i: number = 0; i < 10; i++) {
-        const lupina: HTMLImageElement = document.createElement("img");
+    generateLupina();
 
-        lupina.src = logo;
-        lupina.alt = "logo";
-        lupina.style.position = "absolute";
-        lupina.style.top = `${ Math.random() * 100 }px`;
-        lupina.style.left = `${ Math.random() * 100 }px`;
-        lupina.style.animation = "rotate_image 2s linear infinite";
-        lupina.style.transformOrigin = "50% 50%";
+    setInterval(() => {
+        for (let i: number = 0; i < lupinaList.length; i++) {
+            const lupina: Lupina = lupinaList[i];
 
-        notFound.append(lupina);
-    }
+            moveLupina(lupina);
+        }
+    }, 10);
 });
+
+function generateLupina (): void {
+    for (let i: number = 0; i < 10; i++) {
+        const element: HTMLImageElement = document.createElement("img");
+        const { width, height } = document.body.getBoundingClientRect();
+        const imageLeft: number = Math.floor(Math.random() * (width - imageSize * 2) + imageSize);
+        const imageTop: number = Math.floor(Math.random() * (height - imageSize * 2) + imageSize);
+        const speed: number = Math.floor(Math.random() * 9 + 1);
+
+        element.src = logo;
+        element.alt = "logo";
+        element.style.width = `${ imageSize }px`;
+        element.style.height = `${ imageSize }px`;
+        element.style.position = "absolute";
+        element.style.left = `${ imageLeft }px`;
+        element.style.top = `${ imageTop }px`;
+        element.style.animation = `rotate_image ${ speed }s linear infinite`;
+        element.style.transformOrigin = "50% 50%";
+
+        lupinaList.push(new Lupina(element, speed, speed > 5 ? 1 : -1, speed > 5 ? 1 : -1));
+        notFound.append(element);
+    }
+}
+
+function moveLupina (lupina: Lupina): void {
+    const { width, height } = document.body.getBoundingClientRect();
+    const imageLeft: number = +lupina.element.style.left.replace("px", "");
+    const imageTop: number = +lupina.element.style.top.replace("px", "");
+
+    if (imageLeft < 0 || imageLeft > width - imageSize) {
+        lupina.directionX *= -1;
+    }
+
+    if (imageTop < 0 || imageTop > height - imageSize) {
+        lupina.directionY *= -1;
+    }
+
+    lupina.element.style.left = `${ imageLeft + lupina.directionX * lupina.speed }px`;
+    lupina.element.style.top = `${ imageTop + lupina.directionY * lupina.speed }px`;
+
+    if (imageLeft < 0 || imageLeft > width - imageSize || imageTop < 0 || imageTop > height - imageSize) {
+        lupina.speed = Math.floor(Math.random() * 9 + 1);
+        lupina.element.style.animation = `rotate_image ${ Math.floor(Math.random() * 9 + 1) }s linear infinite`;
+    }
+}
 </script>
 
 <div id="not-found" bind:this={ notFound }>
