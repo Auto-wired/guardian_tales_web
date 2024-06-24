@@ -11,7 +11,7 @@ import Button from "@components/Button.svelte";
 
 import AccountEntity from "@entities/AccountEntity.ts";
 
-const accountEntity: AccountEntity = new AccountEntity;
+const accountEntity: AccountEntity = new AccountEntity();
 
 let emailInput: HTMLInputElement;
 let validateEmailResult: string = "";
@@ -51,19 +51,23 @@ function clearInputStyle (input: HTMLInputElement): void {
     { #if !isValidatedAccountEntity }
         <div id="forgot-username-container">
             <TranslucenceContainer>
-                <Input
-                    on:onInput={() => {
-                        validateEmailResult = "";
+                { #if accountEntity.username.length === 0 }
+                        <Input
+                        on:onInput={() => {
+                            validateEmailResult = "";
 
-                        clearInputStyle(emailInput);
-                    }}
-                    bind:value={ accountEntity.email }
-                    bind:ref={ emailInput }
-                    placeholder="Email"
-                    icon={ emailIcon }
-                />
-                <p class="warning-text">{ validateEmailResult }</p>
-                <Button event={ onNext }>Next</Button>
+                            clearInputStyle(emailInput);
+                        }}
+                        bind:value={ accountEntity.email }
+                        bind:ref={ emailInput }
+                        placeholder="Email"
+                        icon={ emailIcon }
+                    />
+                    <p class="warning-text">{ validateEmailResult }</p>
+                    <Button event={ onNext }>Next</Button>
+                { :else }
+                    <p class="username">Your username is <span>{ accountEntity.username }</span></p>
+                {/if }
                 <div id="link-container">
                     <Link class="link" to="/forgot-password">Forgot password?</Link>
                     <Link class="link" to="/login">Back to login</Link>
@@ -86,6 +90,14 @@ function clearInputStyle (input: HTMLInputElement): void {
     background: url("@images/background/background.png");
     background-size: cover;
     background-position: center;
+}
+
+.username, .username > span {
+    font-size: 22px;
+}
+
+.username > span {
+    font-weight: bold;
 }
 
 .warning-text {

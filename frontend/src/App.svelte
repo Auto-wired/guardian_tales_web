@@ -7,6 +7,7 @@ import Register from "./pages/register/Register.svelte";
 import ForgotUsername from "./pages/forgot_account/ForgotUsername.svelte";
 import ForgotPassword from "./pages/forgot_account/ForgotPassword.svelte";
 import NotFound from "./pages/NotFound.svelte";
+import Test from "./pages/Test.svelte";
 </script>
 
 <Router>
@@ -15,5 +16,6 @@ import NotFound from "./pages/NotFound.svelte";
     <Route path="/register" component={ Register }></Route>
     <Route path="/forgot-username" component={ ForgotUsername }></Route>
     <Route path="/forgot-password" component={ ForgotPassword }></Route>
+    <Route path="/test" component={ Test }></Route>
     <Route path="*" component={ NotFound }></Route>
 </Router>

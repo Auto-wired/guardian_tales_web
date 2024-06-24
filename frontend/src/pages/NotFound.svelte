@@ -39,6 +39,8 @@ function generateLupina (): void {
         element.style.top = `${ imageTop }px`;
         element.style.animation = `rotate_image ${ speed }s linear infinite`;
         element.style.transformOrigin = "50% 50%";
+        element.style.cursor = "pointer";
+        element.style.userSelect = "none";
 
         lupinaList.push(new Lupina(element, speed, speed > 5 ? 1 : -1, speed > 5 ? 1 : -1));
         notFound.append(element);

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@types/node": "^20.12.13",
+    "axios": "^1.7.2",
     "svelte-routing": "^2.13.0"
   }
 }

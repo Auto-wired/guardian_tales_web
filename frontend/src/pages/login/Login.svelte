@@ -20,7 +20,11 @@ let validateUsernameResult: string = "";
 let validatePasswordResult: string = "";
 let isValidatedAccountEntity: boolean = false;
 
-function loginProcess (): void {
+function login (): void {
+    // login code
+}
+
+function onNext (): void {
     if (!validateAccountEntity()) {
         return;
     }
@@ -108,7 +112,7 @@ function clearInputStyle (input: HTMLInputElement): void {
                     />
                     <p class="warning-text">{ validatePasswordResult }</p>
                 </div>
-                <Button event={ loginProcess }>Login</Button>
+                <Button event={ onNext }>Login</Button>
                 <div id="link-container">
                     <Link class="link" to="/forgot-username">Forgot username?</Link>
                     <Link class="link" to="/forgot-password">Forgot password?</Link>
