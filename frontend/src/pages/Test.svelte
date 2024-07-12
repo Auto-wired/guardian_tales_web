@@ -35,7 +35,7 @@ async function send (): Promise<void> {
 }
 
 onMount(() => {
-    getTestList();
+    // getTestList();
 });
 </script>
 
